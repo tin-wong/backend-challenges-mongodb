@@ -3,7 +3,16 @@ const mongoose = require('mongoose');
 
 mongoose.connect(process.env.MONGO_URI);
 
-let Person;
+const personSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true
+  }
+})
+
+const Person = mongoose.model('Person', personSchema);
+
+let person1 = new Person();
 
 const createAndSavePerson = (done) => {
   done(null /*, data*/);
