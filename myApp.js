@@ -39,7 +39,7 @@ const findPeopleByName = (personName, done) => {
 };
 
 const findOneByFood = (food, done) => {
-  Person.findOne({food: food}).then(doc => {
+  Person.findOne({favoriteFoods: food}).then(doc => {
     done(null, doc);
   }).catch(err => {
     console.error(err);
