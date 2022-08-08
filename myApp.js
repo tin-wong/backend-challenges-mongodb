@@ -22,6 +22,8 @@ const createAndSavePerson = (done) => {
   })
 };
 
+//createAndSavePerson(function(){console.log('test')})
+
 const createManyPeople = (arrayOfPeople, done) => {
   Person.create(arrayOfPeople).then(doc => {
     done(null, doc);
@@ -56,9 +58,15 @@ const findPersonById = (personId, done) => {
 
 const findEditThenSave = (personId, done) => {
   const foodToAdd = "hamburger";
-
-  done(null /*, data*/);
+  let person1 = Person.findById(personId).then(doc => {
+    doc.favoriteFoods.push(foodToAdd);
+    done(null, doc);
+  }).catch(err => {
+    console.error(err);
+  })
 };
+
+// findEditThenSave("62f0e4bcc315ac037e803845", function(test, test2){console.log(test2)});
 
 const findAndUpdate = (personName, done) => {
   const ageToSet = 20;
