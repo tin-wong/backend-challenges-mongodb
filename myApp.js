@@ -68,12 +68,16 @@ const findEditThenSave = (personId, done) => {
   })
 };
 
-// findEditThenSave("62f0e4bcc315ac037e803845", function(test, test2){console.log(test2)});
-
 const findAndUpdate = (personName, done) => {
   const ageToSet = 20;
-
-  done(null /*, data*/);
+  Person.findOneAndUpdate(query, {name: personName}, { new: true }, (err, doc) => {
+    if(err) return console.error(err);
+    doc.age.push(ageToSet);
+    doc.save((err, updatedPerson) => {
+      if(err) return console.error(err);
+      done(null, updatedPerson);
+    })
+  })
 };
 
 const removeById = (personId, done) => {
