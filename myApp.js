@@ -18,12 +18,17 @@ const createAndSavePerson = (done) => {
   person1.save().then(doc => {
     done(null, doc);
   }).catch(err => {
-    console.error(err)
+    console.error(err);
   })
 };
 
 const createManyPeople = (arrayOfPeople, done) => {
-  done(null /*, data*/);
+  let manyPeople = Person.create(arrayOfPeople);
+  manyPeople.save().then(doc => {
+    done(null, doc);
+  }).catch(err => {
+    console.error(err);
+  })
 };
 
 const findPeopleByName = (personName, done) => {
