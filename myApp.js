@@ -22,6 +22,8 @@ const createAndSavePerson = (done) => {
   })
 };
 
+createAndSavePerson(function(){console.log('test')})
+
 const createManyPeople = (arrayOfPeople, done) => {
   Person.create(arrayOfPeople).then(doc => {
     done(null, doc);
@@ -40,7 +42,11 @@ const findPeopleByName = (personName, done) => {
 findPeopleByName("Person 1",function(test, doc){console.log(doc)});
 
 const findOneByFood = (food, done) => {
-  done(null /*, data*/);
+  Person.findOne({food: food}).then(doc => {
+    done(null, doc);
+  }).catch(err => {
+    console.error(err);
+  })
 };
 
 const findPersonById = (personId, done) => {
