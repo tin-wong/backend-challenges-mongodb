@@ -13,10 +13,10 @@ const personSchema = new mongoose.Schema({
 
 const Person = mongoose.model('Person', personSchema);
 
-const createAndSavePerson = () => {
+const createAndSavePerson = (done) => {
   let person1 = new Person({name: "Person 1", age: 30, favoriteFoods:["noodles"]});
   person1.save().then(doc => {
-    console.log(doc)
+    done(null, doc);
   }).catch(err => {
     console.error(err)
   })
