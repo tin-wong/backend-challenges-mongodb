@@ -1,7 +1,10 @@
 require('dotenv').config();
+
+// Install and Set Up Mongoose
 const mongoose = require('mongoose');
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true });
 
+// Create a Model
 const personSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -13,6 +16,7 @@ const personSchema = new mongoose.Schema({
 
 const Person = mongoose.model('Person', personSchema);
 
+// Create and Save a Record of a Model
 const createAndSavePerson = (done) => {
   let person1 = new Person({name: "Person 1", age: 30, favoriteFoods:["noodles"]});
   person1.save().then(doc => {
@@ -22,8 +26,7 @@ const createAndSavePerson = (done) => {
   })
 };
 
-//createAndSavePerson(function(){console.log('test')})
-
+// Create Many Records with model.create()
 const createManyPeople = (arrayOfPeople, done) => {
   Person.create(arrayOfPeople).then(doc => {
     done(null, doc);
@@ -32,6 +35,7 @@ const createManyPeople = (arrayOfPeople, done) => {
   })
 };
 
+// Use model.find() to Search Your Database
 const findPeopleByName = (personName, done) => {
   Person.find({name: personName}).then(doc => {
     done(null, doc);
@@ -40,6 +44,7 @@ const findPeopleByName = (personName, done) => {
   })
 };
 
+// Use model.findOne() to Return a Single Matching Document from Your Database
 const findOneByFood = (food, done) => {
   Person.findOne({favoriteFoods: food}).then(doc => {
     done(null, doc);
@@ -48,6 +53,7 @@ const findOneByFood = (food, done) => {
   })
 };
 
+// Use model.findById() to Search Your Database By _id
 const findPersonById = (personId, done) => {
   Person.findById(personId).then(doc => {
     done(null, doc);
@@ -56,6 +62,7 @@ const findPersonById = (personId, done) => {
   })
 };
 
+// Perform Classic Updates by Running Find, Edit, then Save
 const findEditThenSave = (personId, done) => {
   const foodToAdd = "hamburger";
   Person.findById(personId, function(err, doc){
@@ -78,7 +85,10 @@ const findAndUpdate = (personName, done) => {
 };
 
 const removeById = (personId, done) => {
-  done(null /*, data*/);
+  Person.findByIdAndRemove(personId, (err, doc) => {
+    if(err) return console.error(err);
+    done(null, doc);
+  })
 };
 
 const removeManyPeople = (done) => {
