@@ -111,7 +111,9 @@ const queryChain = (done) => {
     sort('name').
     limit(2).
     select('-age').
-    exec(done(err, data));
+    exec((err, data) => {
+      done(err, data)
+    });
 };
 
 /** **Well Done !!**
